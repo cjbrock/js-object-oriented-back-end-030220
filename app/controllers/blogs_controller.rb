@@ -15,7 +15,7 @@ class BlogsController < ApplicationController
     if @blog.save
       render json: @blog, status: :created, location: @blog
     else
-      render json: @blog.errors, status: :unprocessable_entity
+      render json: {errors: @blog.errors.full_messages}
     end
   end
 
@@ -23,12 +23,13 @@ class BlogsController < ApplicationController
     if @blog.update(blog_params)
       render json: @blog
     else
-      render json: @blog.errors, status: :unprocessable_entity
+      render json: {errors: @blog.errors.full_messages}
     end
   end
 
   def destroy
     @blog.destroy
+    render json: @blog
   end
 
   private
